@@ -8,7 +8,7 @@ The L1 classification of factors is based on the Author's manual detection of em
 The second part of this research project will focus on higher level classifications.
 
 The repository contains the following files:
-1) A dataset with 750+ factors, associated to their bibliographic source and an initial classification (L1) by criticality. 
+1) A dataset with 750+ factors, some redoundant, associated to their bibliographic source and an initial classification (L1) by criticality. 
 2) Python code to cluster and visualize the dataset.
 3) 2D and 3D scatterplots visualizing the clustered dataset by feature reduction level. The feature reduction is based on semantic similarity (cosine similarity ratio) between the embeddings of the above-mentioned dataset.
 4) 2D and 3D scatterplots visualizing the L1 (first level) classification of such factors by criticality, distinguishing L1-critical factors in color from non-critical factors in grey.
