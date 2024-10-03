@@ -1,0 +1,88 @@
+#!/usr/bin/python3
+'''
+NAME
+    get-WB-reports - ...
+
+SYNOPSIS
+    get-WB-reports ...
+    Options:
+       -m 16      up to 16 reports (default 500)
+       -c BR      country = BR (Brazil)
+       -d         debug
+       -t 1|2|3|4   Type of doc to download:
+                  1=Project Appraisal Document,  PAD
+                  2=Implementation Completion report review ICRR
+                  3=Implementation Completion and Result Report ICaRR (default)
+                  4=Project Performance Assessment Report PPAR
+Description
+
+    downloads Report from WB
+    related to a country
+
+Stores docs in
+    <country>/<projectID><docID>.pdf
+
+deps:  requests jjcli (pip install _)
+'''
+
+from jjcli import * 
+import requests, json, os
+
+cl=clfilter(opt="m:c:dt:", doc=__doc__)    ## option values in cl.opt dictionary
+
+maxdocs = int(cl.opt.get("-m","500")),     ## option -m 30 (def:500) how many docs
+ccode= cl.opt.get("-c","GW")               ## option -c BR
+typeid= int(cl.opt.get("-t","3"))          ## option -t 3   type of document
+docrel= ["Project Appraisal Document",
+         "Implementation Completion Report Review",
+         "Implementation Completion and Results Report",
+         "Project Performance Assessment Report",
+        ]
+doctype = docrel[typeid-1]
+
+wb="https://search.worldbank.org/api/v2/wds"   ## base WB api
+data={                                 ## query parameters
+  "rows": int(cl.opt.get("-m","500")),     ## how many docs
+  "os": 0,                                 ## starts in 0
+  "format": "json",                        
+  "countrycode_exact": ccode,              ## get just country=ccode
+  "docty_exact": doctype,                  ## get just docty= ...
+  "fl": "count,volnb,totvolnb,docna,docty,repnme,available_in,geo_reg,keywd,ml_abstract,majtheme,theme,subtheme,topic,projectid",
+}
+
+def get_save_pdf(url,file):            ## get url and save it to file
+    if not os.path.exists(file):           ## if not already exists
+        if "-d" in cl.opt:                 ## if option debug
+            print(f"geting document {file}")
+        r= requests.get(url, params=data)  ## get pdf
+        with open(file, 'wb') as f:        ## and save it
+            for chunk in r.iter_content(chunk_size=128):
+                f.write(chunk)
+
+r = requests.get(wb, params=data)          ## major query WB!!
+J = r.json()
+tot = J.get('total',0)                     ## number of documents
+R = J["documents"]                         ## metadata of the list of documents
+
+if "-d" in cl.opt:                         ## if option debug
+    print(f"{ccode}: total = {tot}")
+
+if tot == 0 :                ## if no documents for this country: leave
+    exit(0)
+
+dir = ccode if typeid == 3 else f"{ccode}-{typeid}"
+
+if not os.path.exists(dir):  ## mkdir if not exists
+    os.makedirs(dir)
+
+with open(f"{dir}/{data['os']}.json","w") as f: ## save the Json Metadata 0.json
+    json.dump(R, f, ensure_ascii=False,indent=3)
+
+for code, doc in R.items():
+    if "pdfurl" not in doc: continue       ## if no pdf (this shout not happen)
+    if "projectid" in doc:
+        filename= f"{dir}/{doc['projectid']}-{code}.pdf"
+    else:
+        filename= f"{dir}/{code}.pdf"      ## if no projectid (this shout not happen)
+    get_save_pdf(doc["pdfurl"], filename)
+
