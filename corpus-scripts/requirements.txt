@@ -1,0 +1,9 @@
+tqdm
+beautifulsoup4
+pandas
+jellyfish
+requests
+lxml
+langdetect
+pymupdf
+openpyxl
