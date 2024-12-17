@@ -1,4 +1,4 @@
-This repository relates to the PhD research project of Mr. Nicola Drago (University of Padova, Italy) titled "Explainable identification of predictive factors for successful inter-agency partnerships.". The thesis of this project was submitted for revision on September 30th, 2024.
+This repository relates to the PhD research project of Mr. Nicola Drago (University of Padova, Italy) titled "Explainable identification of predictive factors for successful inter-agency partnerships.". The thesis of this project was submitted for revision on September 30th, 2024, and its final version was approved on December 3rd, 2024.
 
 The repository contains three folders:
 
