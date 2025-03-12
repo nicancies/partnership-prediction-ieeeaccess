@@ -1,6 +1,6 @@
-This repository relates to the paper "Explainable Predictive Factors for Inter-agency Partnership Success" under review at IEEE Access. 
+This repository relates to the paper "Explainable Predictive Factors for Inter-agency Partnership Success" published by IEEE Access (DOI: 10.1109/ACCESS.2025.3547439). 
 The paper is authored by Mr. Nicola Drago (University of Padova, Italy), Mr. Gonçalo Braz Afonso (INESCTEC, Portugal), and Prof. Tullio Vardanega (University of Padova).
-The paper is based on the PhD research project of Mr. Nicola Drago (University of Padova, Italy) titled "Explainable identification of predictive factors for successful inter-agency partnerships." The thesis of this project was submitted for revision on September 30th, 2024, its final version was approved on December 3rd, 2024, and its defense is scheduled for March 13th, 2025.
+The paper is based on the PhD research project of Mr. Nicola Drago (University of Padova, Italy) titled "Explainable identification of predictive factors for successful inter-agency partnerships."
 
 The repository contains three folders:
 
